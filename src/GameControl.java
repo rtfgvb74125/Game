@@ -6,8 +6,11 @@ import java.awt.event.KeyListener;
 public class GameControl extends JFrame{
     private int ScreenW = Toolkit.getDefaultToolkit().getScreenSize().width;
     private int ScreenH = Toolkit.getDefaultToolkit().getScreenSize().height;
-    private int frmW = 1000,frmH = 800,MarioX = 500,MarioY = 600;
-    private JLabel jlabMario = new JLabel();
+    private int frmW = 1000,frmH = 800,MarioX = 500,MarioY = 596;
+    private ImageIcon mario = new ImageIcon("Image/m.png");
+    private ImageIcon marioleft = new ImageIcon("Image/mleft.png");
+    private ImageIcon marioup = new ImageIcon("Image/mup.png");
+    private JLabel jlabMario = new JLabel(mario);
     private JLabel jlabGround = new JLabel();
     private JButton jbStart = new JButton("Start");
     private JLabel jlCount = new JLabel("Count");
@@ -28,9 +31,9 @@ public class GameControl extends JFrame{
         this.add(jlabGround);
         cp = this.getContentPane();
         cp.setLayout(new BorderLayout(3,3));
-        jlabMario.setBounds(MarioX,MarioY,100,50);
+        jlabMario.setBounds(MarioX,MarioY,50,75);
         jlabMario.setOpaque(true);
-        jlabMario.setBackground(Color.BLUE);
+//        jlabMario.setBackground(Color.BLUE);
         jlabGround.setBounds(0,670,1000,40);
         jlabGround.setBackground(new Color(0x855E2C));
         jlabGround.setOpaque(true);
@@ -51,13 +54,21 @@ public class GameControl extends JFrame{
             public void keyPressed(KeyEvent e) {
                 switch (e.getKeyCode()){
                     case KeyEvent.VK_RIGHT:
-                        MarioX++;
+                        MarioX+=10;
+                        jlabMario.setIcon(mario);
                         jlabMario.setLocation(MarioX,MarioY);
                         break;
                     case KeyEvent.VK_LEFT:
-                        MarioX--;
+                        MarioX-=10;
+                        jlabMario.setIcon(marioleft);
                         jlabMario.setLocation(MarioX,MarioY);
                         break;
+                    case KeyEvent.VK_UP:
+                        MarioY-=10;
+                        jlabMario.setIcon(marioup);
+//                        if(MarioY != 546){
+//
+//                        }
                 }
             }
 
