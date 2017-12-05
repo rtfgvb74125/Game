@@ -8,12 +8,18 @@ import java.awt.event.KeyListener;
 public class GameControl extends JFrame{
     private int ScreenW = Toolkit.getDefaultToolkit().getScreenSize().width;
     private int ScreenH = Toolkit.getDefaultToolkit().getScreenSize().height;
-    private int frmW = 1000,frmH = 800,MarioX = 500,MarioY = 596;
+    private int frmW = 1000,frmH = 1000,MarioX = 500,MarioY = 820;
+    private int c = 0;
     private Timer t1 ;
+    private ImageIcon mariomini = new ImageIcon("Image/mini.png");
+    private ImageIcon mariominileft = new ImageIcon("Image/minileft.png");
     private ImageIcon mario = new ImageIcon("Image/m.png");
     private ImageIcon marioleft = new ImageIcon("Image/mleft.png");
     private ImageIcon marioup = new ImageIcon("Image/mup.png");
-    private JLabel jlabMario = new JLabel(mario);
+    private ImageIcon marioupleft = new ImageIcon("Image/mupleft.png");
+    private ImageIcon gugu = new ImageIcon("Image/mario_gugu.png");
+    private JLabel jlabMario = new JLabel(mariomini);
+    private JLabel jlabGugu = new JLabel(gugu);
     private JLabel jlabGround = new JLabel();
     private JButton jbStart = new JButton("Start");
     private JLabel jlCount = new JLabel("Count");
@@ -24,6 +30,8 @@ public class GameControl extends JFrame{
     private Container cp;
     private boolean cheak = true;
     private boolean cheak2 = false;
+    private boolean cImage = true;
+
     public GameControl(){
         init();
     }
@@ -34,20 +42,26 @@ public class GameControl extends JFrame{
         this.setLayout(null);
         this.add(jlabMario);
         this.add(jlabGround);
+        this.add(jlabGugu);
         cp = this.getContentPane();
         cp.setLayout(new BorderLayout(3,3));
-        jlabMario.setBounds(MarioX,MarioY,50,75);
+        jlabMario.setBounds(MarioX,MarioY,50,50);
         jlabMario.setOpaque(true);
+        jlabGugu.setBounds(0,845,25,25);
 //        jlabMario.setBackground(Color.BLUE);
-        jlabGround.setBounds(0,670,1000,40);
+        jlabGround.setBounds(0,870,1000,40);
         jlabGround.setBackground(new Color(0x855E2C));
         jlabGround.setOpaque(true);
-        jpnSouth.add(jbStart);
+        jtxCount.setEnabled(true);
+        jtxTime.setEnabled(true);
+//        jpnSouth.add(jbStart);
         jpnSouth.add(jlCount);
         jpnSouth.add(jtxCount);
         jpnSouth.add(jlTime);
         jpnSouth.add(jtxTime);
         cp.add(jpnSouth,BorderLayout.SOUTH);
+
+
 
         this.addKeyListener(new KeyListener() {
             @Override
@@ -60,18 +74,35 @@ public class GameControl extends JFrame{
                 switch (e.getKeyCode()){
                     case KeyEvent.VK_RIGHT:
                         MarioX+=10;
-                        jlabMario.setIcon(mario);
-                        jlabMario.setLocation(MarioX,MarioY);
-
+                        if(cImage){
+                            jlabMario.setIcon(mariomini);
+                            jlabMario.setLocation(MarioX,MarioY);
+                        }else{
+                            jlabMario.setIcon(marioup);
+                            jlabMario.setLocation(MarioX,MarioY);
+                        }
                         break;
                     case KeyEvent.VK_LEFT:
                         MarioX-=10;
-                        jlabMario.setIcon(marioleft);
-                        jlabMario.setLocation(MarioX,MarioY);
+//                        if(MarioX <= 25 && MarioY>=845){
+//                            jlabMario.setIcon(marioleft);
+//                            jlabMario.setLocation(500,800);
+//                            c++;
+//                            jtxCount.setText(Integer.toString(c));
+//
+//                        }
+                        if(cImage){
+                            jlabMario.setIcon(mariominileft);
+                            jlabMario.setLocation(MarioX,MarioY);
+                        }else{
+                            jlabMario.setIcon(marioupleft);
+                            jlabMario.setLocation(MarioX,MarioY);
+                        }
                         break;
                     case KeyEvent.VK_UP:
-                     t1.start();
-                     jlabMario.setIcon(marioup);
+                        cImage = false;
+                        t1.start();
+                        jlabMario.setIcon(marioup);
                 }
             }
 
@@ -86,18 +117,19 @@ public class GameControl extends JFrame{
         t1 = new Timer(5, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (MarioY > 496 && cheak) {
+                if (MarioY > 596 && cheak) {
                     MarioY--;
-                    if (MarioY == 496) {
+                    if (MarioY == 596) {
                         cheak = false;
                     }
                     jlabMario.setLocation(MarioX, MarioY);
                 }else{
                     MarioY++;
-                    if (MarioY==596) {
+                    if (MarioY==820) {
                         cheak = true;
                         t1.stop();
-                        jlabMario.setIcon(mario);
+                        jlabMario.setIcon(mariomini);
+                        cImage = true;
                     }
 
                     jlabMario.setLocation(MarioX, MarioY);
