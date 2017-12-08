@@ -13,11 +13,16 @@ public class LoginGame extends JFrame{
     private Container cp;
     private ImageIcon MarioR = new ImageIcon("Image/mini.png");
     private ImageIcon MarioL = new ImageIcon("Image/minileft.png");
+    private ImageIcon Brick = new ImageIcon("Image/brick.png");
     private JLabel jlabground = new JLabel();
     private JLabel Mario = new JLabel(MarioR);
     private JLabel Title1 = new JLabel("SUPER");
     private JLabel Title2 = new JLabel("MARIO");
     private Boolean cheak = true;
+    private JLabel jlabBrick = new JLabel(Brick);
+    private JLabel jlabBrick2 = new JLabel(Brick);
+    private JLabel jlabBrick3 = new JLabel(Brick);
+    private JLabel jlabBrick4 = new JLabel(Brick);
     private Timer t1;
     public LoginGame(){
         init();
@@ -33,6 +38,10 @@ public class LoginGame extends JFrame{
         this.add(Title1);
         this.add(Title2);
         this.add(jbtnStart);
+        this.add(jlabBrick);
+        this.add(jlabBrick2);
+        this.add(jlabBrick3);
+        this.add(jlabBrick4);
         jlabground.setBounds(0,430,600,40);
         jlabground.setOpaque(true);
         jlabground.setBackground(new Color(142, 90, 52));
@@ -44,6 +53,10 @@ public class LoginGame extends JFrame{
         Title2.setBounds(250,50,300,100);
         Title2.setHorizontalAlignment(SwingConstants.CENTER);
         Title2.setFont(new Font(null,Font.BOLD,35));
+        jlabBrick.setBounds(100,200,50,50);
+        jlabBrick2.setBounds(150,200,50,50);
+        jlabBrick3.setBounds(200,200,50,50);
+        jlabBrick4.setBounds(250,200,50,50);
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowOpened(WindowEvent e) {

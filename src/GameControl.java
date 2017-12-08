@@ -18,6 +18,7 @@ public class GameControl extends JFrame {
     private ImageIcon marioup = new ImageIcon("Image/mup.png");
     private ImageIcon marioupleft = new ImageIcon("Image/mupleft.png");
     private ImageIcon gugu = new ImageIcon("Image/mario_gugu.png");
+    private ImageIcon brick = new ImageIcon("Image/brick.png");
     private JLabel jlabMario = new JLabel(mariomini);
     private JLabel jlabGugu = new JLabel(gugu);
     private JLabel jlabGround = new JLabel();
@@ -27,6 +28,9 @@ public class GameControl extends JFrame {
     private JLabel jlTime = new JLabel("Time :");
     private JTextField jtxTime = new JTextField("0");
     private JPanel jpnSouth = new JPanel(new GridLayout(1, 9, 3, 3));
+//    private JLabel jlabrick[] = new JLabel[20];
+//    private int data[] = new int[20];
+//    private JPanel jpGround = new JPanel(new GridLayout(1,20,0,0));
     private Container cp;
     private boolean cheak = true;
     private boolean cheak2 = false;
@@ -48,7 +52,7 @@ public class GameControl extends JFrame {
         cp.setLayout(new BorderLayout(3, 3));
         jlabMario.setBounds(MarioX, MarioY, 50, 50);
         jlabGugu.setBounds(0, 845, 25, 25);
-//        jlabMario.setBackground(Color.BLUE);
+        jlabMario.setBackground(Color.BLUE);
         jlabGround.setBounds(0, 870, 1000, 40);
         jlabGround.setBackground(new Color(0x855E2C));
         jlabGround.setOpaque(true);
@@ -60,7 +64,7 @@ public class GameControl extends JFrame {
         jpnSouth.add(jlTime);
         jpnSouth.add(jtxTime);
         cp.add(jpnSouth, BorderLayout.NORTH);
-
+//        cp.add(jpGround,BorderLayout.SOUTH);
 
         this.addKeyListener(new KeyListener() {
             @Override
@@ -135,6 +139,12 @@ public class GameControl extends JFrame {
                 }
             }
         });
+
+//        for(int i = 0;i<20;i++){
+//            jlabrick[i] = new JLabel();
+//            jlabrick[i].setIcon(brick);
+//            jpGround.add(jlabground[i]);
+//        }
     }
 }
 
