@@ -78,12 +78,14 @@ public class LoginGame extends JFrame{
                         MarioX++;
                         if(MarioX==550){
                             cheak = false;
+                            Mario.setIcon(MarioL);
                         }
                         Mario.setLocation(MarioX,MarioY);
                     }else {
                         MarioX--;
                         if(MarioX==0){
                             cheak = true;
+                            Mario.setIcon(MarioR);
                         }
                         Mario.setLocation(MarioX,MarioY);
                     }
