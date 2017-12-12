@@ -47,6 +47,7 @@ public class LoginGame extends JFrame{
         jlabground.setBackground(new Color(142, 90, 52));
         Mario.setBounds(MarioX,MarioY,50,50);
         jbtnStart.setBounds(150,150,300,50);
+        jbtnStart.setFont(new Font(null,Font.BOLD,30));
         Title1.setBounds(90,10,300,100);
         Title1.setHorizontalAlignment(SwingConstants.CENTER);
         Title1.setFont(new Font(null,Font.BOLD,35));
@@ -78,12 +79,14 @@ public class LoginGame extends JFrame{
                         MarioX++;
                         if(MarioX==550){
                             cheak = false;
+                            Mario.setIcon(MarioL);
                         }
                         Mario.setLocation(MarioX,MarioY);
                     }else {
                         MarioX--;
                         if(MarioX==0){
                             cheak = true;
+                            Mario.setIcon(MarioR);
                         }
                         Mario.setLocation(MarioX,MarioY);
                     }

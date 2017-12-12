@@ -1,16 +1,15 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 
 public class GameControl extends JFrame {
     private int ScreenW = Toolkit.getDefaultToolkit().getScreenSize().width;
     private int ScreenH = Toolkit.getDefaultToolkit().getScreenSize().height;
-    private int frmW = 1000, frmH = 1000, MarioX = 500, MarioY = 820;
-    private int c = 0;
-    private Timer t1;
+    private int frmW = 1000, frmH = 1000, MarioX = 500, MarioY = 820,GuguX = 950,GuguY = 820;
+    private int c = 0, t =0;
+    private Timer marioUP;
+    private Timer guguRun;
+    private Timer gameTime;
     private ImageIcon mariomini = new ImageIcon("Image/mini.png");
     private ImageIcon mariominileft = new ImageIcon("Image/minileft.png");
     private ImageIcon mario = new ImageIcon("Image/m.png");
@@ -20,6 +19,7 @@ public class GameControl extends JFrame {
     private ImageIcon gugu = new ImageIcon("Image/mario_gugu.png");
     private ImageIcon brick = new ImageIcon("Image/brick.png");
     private JLabel jlabMario = new JLabel(mariomini);
+    private JLabel jlabBigM = new JLabel(marioleft);
     private JLabel jlabGugu = new JLabel(gugu);
     private JLabel jlabGround = new JLabel();
     private JButton jbStart = new JButton("Start");
@@ -45,15 +45,28 @@ public class GameControl extends JFrame {
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setBounds(ScreenW / 2 - frmW / 2, ScreenH / 2 - frmH / 2, frmW, frmH);
         this.setLayout(null);
+        this.setResizable(false);
         this.add(jlabMario);
         this.add(jlabGround);
         this.add(jlabGugu);
+        this.add(jlabBigM);
+        jtxCount.setEditable(false);
+        jtxTime.setEditable(false);
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowOpened(WindowEvent e) {
+                guguRun.start();
+                gameTime.start();
+            }
+        });
+        jlabBigM.setVisible(false);
         cp = this.getContentPane();
         cp.setLayout(new BorderLayout(3, 3));
+        cp.setBackground(Color.CYAN);
         jlabMario.setBounds(MarioX, MarioY, 50, 50);
-        jlabGugu.setBounds(0, 845, 25, 25);
+        jlabGugu.setBounds(GuguX, GuguY, 50, 50);
         jlabMario.setBackground(Color.BLUE);
-        jlabGround.setBounds(0, 870, 1000, 40);
+        jlabGround.setBounds(0, 870, 1000, 100);
         jlabGround.setBackground(new Color(0x855E2C));
         jlabGround.setOpaque(true);
         jtxCount.setEnabled(true);
@@ -76,36 +89,44 @@ public class GameControl extends JFrame {
             public void keyPressed(KeyEvent e) {
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_RIGHT:
-                        MarioX += 10;
-                        if (cImage) {
-                            jlabMario.setIcon(mariomini);
-                            jlabMario.setLocation(MarioX, MarioY);
-                        } else {
-                            jlabMario.setIcon(marioup);
-                            jlabMario.setLocation(MarioX, MarioY);
+                        if(MarioX < 950){
+                            MarioX += 10;
+                            if (cImage) {
+                                jlabMario.setIcon(mariomini);
+                                jlabMario.setLocation(MarioX, MarioY);
+                                jlabBigM.setIcon(mario);
+                                jlabBigM.setLocation(jlabMario.getX(),jlabMario.getY()-25);
+                            } else {
+                                jlabMario.setIcon(marioup);
+                                jlabMario.setLocation(MarioX, MarioY);
+                            }
+                            gugubig();
+                            jlabBigM.setLocation(jlabMario.getX(),jlabMario.getY()-25);
                         }
+                        System.out.println(jlabMario.getX()+"\t"+(jlabMario.getY()-25));
                         break;
                     case KeyEvent.VK_LEFT:
-                        MarioX -= 10;
-//                        if(MarioX <= 25 && MarioY>=845){
-//                            jlabMario.setIcon(marioleft);
-//                            jlabMario.setLocation(500,800);
-//                            c++;
-//                            jtxCount.setText(Integer.toString(c));
-//
-//                        }
-                        if (cImage) {
-                            jlabMario.setIcon(mariominileft);
-                            jlabMario.setLocation(MarioX, MarioY);
-                        } else {
-                            jlabMario.setIcon(marioupleft);
-                            jlabMario.setLocation(MarioX, MarioY);
+                        if(MarioX > 0){
+                            MarioX -= 10;
+                            if (cImage) {
+                                jlabMario.setIcon(mariominileft);
+                                jlabMario.setLocation(MarioX, MarioY);
+                                jlabBigM.setIcon(marioleft);
+                                jlabBigM.setLocation(jlabMario.getX(),jlabMario.getY()-25);
+                            } else {
+                                jlabMario.setIcon(marioupleft);
+                                jlabMario.setLocation(MarioX, MarioY);
+                            }
+                            gugubig();
+                            jlabBigM.setLocation(jlabMario.getX(),jlabMario.getY()-25);
                         }
+                        System.out.println(jlabMario.getX()+"\t"+(jlabMario.getY()-25));
                         break;
                     case KeyEvent.VK_UP:
                         cImage = false;
-                        t1.start();
+                        marioUP.start();
                         jlabMario.setIcon(marioup);
+                        gugubig();
                 }
             }
 
@@ -117,26 +138,47 @@ public class GameControl extends JFrame {
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
 
-        t1 = new Timer(5, new ActionListener() {
+        marioUP = new Timer(5, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (MarioY > 596 && cheak) {
+                if (MarioY > 696 && cheak) {
                     MarioY--;
-                    if (MarioY == 596) {
+                    if (MarioY == 696) {
                         cheak = false;
                     }
                     jlabMario.setLocation(MarioX, MarioY);
+                    jlabBigM.setLocation(jlabMario.getX(),jlabMario.getY()-25);
                 } else {
                     MarioY++;
                     if (MarioY == 820) {
                         cheak = true;
-                        t1.stop();
+                        marioUP.stop();
                         jlabMario.setIcon(mariomini);
                         cImage = true;
                     }
 
                     jlabMario.setLocation(MarioX, MarioY);
+                    jlabBigM.setLocation(jlabMario.getX(),jlabMario.getY()-25);
                 }
+            }
+        });
+
+        guguRun = new Timer(3, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                GuguX--;
+                jlabGugu.setLocation(GuguX,GuguY);
+                gugubig();
+                System.out.println(GuguX);
+//                guguRun.stop();
+            }
+        });
+
+        gameTime = new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                t++;
+                jtxTime.setText(Integer.toString(t));
             }
         });
 
@@ -145,6 +187,17 @@ public class GameControl extends JFrame {
 //            jlabrick[i].setIcon(brick);
 //            jpGround.add(jlabground[i]);
 //        }
+    }
+    private void gugubig(){
+        if(MarioX==GuguX && MarioY==GuguY){
+            jlabBigM.setBounds(GuguX,GuguY-25,50,75);
+            jlabBigM.setVisible(true);
+//            this.add(jlabBigM);
+            System.out.println(jlabMario.getX()+"\t"+(jlabMario.getY()-25));
+            jlabMario.setVisible(false);
+            jlabGugu.setVisible(false);
+            guguRun.stop();
+        }
     }
 }
 
