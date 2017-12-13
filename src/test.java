@@ -2,10 +2,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class GameControl extends JFrame {
+public class test extends JFrame {
     private int ScreenW = Toolkit.getDefaultToolkit().getScreenSize().width;
     private int ScreenH = Toolkit.getDefaultToolkit().getScreenSize().height;
-    private int frmW = 1000, frmH = 1000, MarioX = 500, MarioY = 820,GuguX = 950,GuguY = 820,BrickX = 600,BrickY = 820;
+    private int frmW = 1000, frmH = 400, MarioX = 500, MarioY = 300,GuguX = 950,GuguY = 300,BrickX = 600,BrickY = 300;
     private int c = 0, t =0;
     private Timer marioUP;
     private Timer guguRun;
@@ -23,15 +23,15 @@ public class GameControl extends JFrame {
     private JLabel jlabMario = new JLabel(mariomini);
     private JLabel jlabBigM = new JLabel(marioleft);
     private JLabel jlabGugu = new JLabel(gugu);
-    private JLabel jlabGround = new JLabel();
     private JLabel jlabbrick = new JLabel(brick);
+    private JLabel jlabGround = new JLabel();
     private JButton jbStart = new JButton("Start");
     private JLabel jlCount = new JLabel("Coin");
     private JTextField jtxCount = new JTextField("0");
     private JLabel jlTime = new JLabel("Time :");
     private JTextField jtxTime = new JTextField("0");
     private JPanel jpnSouth = new JPanel(new GridLayout(1, 9, 3, 3));
-//    private JLabel jlabrick[] = new JLabel[20];
+    //    private JLabel jlabrick[] = new JLabel[20];
 //    private int data[] = new int[20];
 //    private JPanel jpGround = new JPanel(new GridLayout(1,20,0,0));
     private Container cp;
@@ -39,7 +39,7 @@ public class GameControl extends JFrame {
     private boolean cheak2 = false;
     private boolean cImage = true;
 
-    public GameControl() {
+    public test() {
         init();
     }
 
@@ -69,8 +69,8 @@ public class GameControl extends JFrame {
         cp.setBackground(Color.CYAN);
         jlabMario.setBounds(MarioX, MarioY, 50, 50);
         jlabGugu.setBounds(GuguX, GuguY, 50, 50);
+        jlabbrick.setBounds(BrickX,BrickY,50,50);
         jlabMario.setBackground(Color.BLUE);
-//        jlabbrick.setBounds(BrickX,BrickY,50,50);
         jlabGround.setBounds(0, 870, 1000, 100);
         jlabGround.setBackground(new Color(0x855E2C));
         jlabGround.setOpaque(true);
@@ -149,19 +149,20 @@ public class GameControl extends JFrame {
         marioUP = new Timer(5, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (MarioY > 696 && cheak) {
+                if (MarioY > 200 && cheak) {
                     MarioY--;
-                    if (MarioY == 696) {
+                    if (MarioY == 200) {
                         cheak = false;
                     }
                     jlabMario.setLocation(MarioX, MarioY);
                     jlabBigM.setLocation(jlabMario.getX(),jlabMario.getY()-25);
                 } else {
                     MarioY++;
-                    if (MarioY == 820) {
+                    if (MarioY == 300) {
                         cheak = true;
                         marioUP.stop();
                         jlabMario.setIcon(mariomini);
+                        jlabBigM.setIcon(mario);
                         cImage = true;
                     }
 
@@ -206,6 +207,9 @@ public class GameControl extends JFrame {
             jlabGugu.setVisible(false);
             guguRun.stop();
         }
+    }
+    private void stopbrick(){
+
     }
 }
 
