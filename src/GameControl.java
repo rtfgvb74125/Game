@@ -5,7 +5,7 @@ import java.awt.event.*;
 public class GameControl extends JFrame {
     private int ScreenW = Toolkit.getDefaultToolkit().getScreenSize().width;
     private int ScreenH = Toolkit.getDefaultToolkit().getScreenSize().height;
-    private int frmW = 1000, frmH = 1000, MarioX = 500, MarioY = 820,GuguX = 950,GuguY = 820,BrickX = 600,BrickY = 820;
+    private int frmW = 1000, frmH = 1000, MarioX = 500, MarioY = 820,GuguX = 950,GuguY = 820,BrickX = 600,BrickY = 825;
     private int c = 0, t =0;
     private Timer marioUP;
     private Timer guguRun;
@@ -36,7 +36,6 @@ public class GameControl extends JFrame {
 //    private JPanel jpGround = new JPanel(new GridLayout(1,20,0,0));
     private Container cp;
     private boolean cheak = true;
-    private boolean cheak2 = false;
     private boolean cImage = true;
 
     public GameControl() {
@@ -69,6 +68,7 @@ public class GameControl extends JFrame {
         cp.setBackground(Color.CYAN);
         jlabMario.setBounds(MarioX, MarioY, 50, 50);
         jlabGugu.setBounds(GuguX, GuguY, 50, 50);
+        jlabbrick.setBounds(BrickX,BrickY,50,50);
         jlabMario.setBackground(Color.BLUE);
 //        jlabbrick.setBounds(BrickX,BrickY,50,50);
         jlabGround.setBounds(0, 870, 1000, 100);
@@ -76,6 +76,7 @@ public class GameControl extends JFrame {
         jlabGround.setOpaque(true);
         jtxCount.setEnabled(true);
         jtxTime.setEnabled(true);
+        jtxTime.setFont(new Font(null,Font.BOLD,20));
 //        jpnSouth.add(jbStart);
         jpnSouth.add(jlCount);
         jpnSouth.add(jtxCount);
@@ -135,6 +136,7 @@ public class GameControl extends JFrame {
                         jlabMario.setIcon(marioup);
                         jlabBigM.setIcon(bigup);
                         gugubig();
+                        brickEdge();
                 }
             }
 
@@ -162,6 +164,7 @@ public class GameControl extends JFrame {
                         cheak = true;
                         marioUP.stop();
                         jlabMario.setIcon(mariomini);
+                        jlabBigM.setIcon(mario);
                         cImage = true;
                     }
 
@@ -205,6 +208,12 @@ public class GameControl extends JFrame {
             jlabMario.setVisible(false);
             jlabGugu.setVisible(false);
             guguRun.stop();
+        }
+    }
+    private void brickEdge(){
+        if((MarioX>=BrickX && MarioX<=BrickX+50) &&  MarioY==BrickY-75){
+
+
         }
     }
 }

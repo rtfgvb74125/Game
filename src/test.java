@@ -7,9 +7,11 @@ public class test extends JFrame {
     private int ScreenH = Toolkit.getDefaultToolkit().getScreenSize().height;
     private int frmW = 1000, frmH = 400, MarioX = 500, MarioY = 300,GuguX = 950,GuguY = 300,BrickX = 600,BrickY = 300;
     private int c = 0, t =0;
+    private int marioFoot = 300, mariojump = 200;
     private Timer marioUP;
     private Timer guguRun;
     private Timer gameTime;
+    private Timer marioDown;
     private ImageIcon mariomini = new ImageIcon("Image/mini.png");
     private ImageIcon mariominileft = new ImageIcon("Image/minileft.png");
     private ImageIcon mario = new ImageIcon("Image/m.png");
@@ -76,6 +78,7 @@ public class test extends JFrame {
         jlabGround.setOpaque(true);
         jtxCount.setEnabled(true);
         jtxTime.setEnabled(true);
+        jtxTime.setFont(new Font(null,Font.BOLD,20));
 //        jpnSouth.add(jbStart);
         jpnSouth.add(jlCount);
         jpnSouth.add(jtxCount);
@@ -96,6 +99,9 @@ public class test extends JFrame {
                     case KeyEvent.VK_RIGHT:
                         if(MarioX < 950){
                             MarioX += 10;
+                            brickEdge();
+                            System.out.println(123);
+                            marioDown.start();
                             if (cImage) {
                                 jlabMario.setIcon(mariomini);
                                 jlabMario.setLocation(MarioX, MarioY);
@@ -114,6 +120,8 @@ public class test extends JFrame {
                     case KeyEvent.VK_LEFT:
                         if(MarioX > 0){
                             MarioX -= 10;
+                            brickEdge();
+                            marioDown.start();
                             if (cImage) {
                                 jlabMario.setIcon(mariominileft);
                                 jlabMario.setLocation(MarioX, MarioY);
@@ -135,6 +143,7 @@ public class test extends JFrame {
                         jlabMario.setIcon(marioup);
                         jlabBigM.setIcon(bigup);
                         gugubig();
+                        brickEdge();
                 }
             }
 
@@ -149,16 +158,16 @@ public class test extends JFrame {
         marioUP = new Timer(5, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (MarioY > 200 && cheak) {
+                if (MarioY > mariojump && cheak) {
                     MarioY--;
-                    if (MarioY == 200) {
+                    if (MarioY == mariojump) {
                         cheak = false;
                     }
                     jlabMario.setLocation(MarioX, MarioY);
                     jlabBigM.setLocation(jlabMario.getX(),jlabMario.getY()-25);
                 } else {
                     MarioY++;
-                    if (MarioY == 300) {
+                    if (MarioY == marioFoot) {
                         cheak = true;
                         marioUP.stop();
                         jlabMario.setIcon(mariomini);
@@ -168,6 +177,19 @@ public class test extends JFrame {
 
                     jlabMario.setLocation(MarioX, MarioY);
                     jlabBigM.setLocation(jlabMario.getX(),jlabMario.getY()-25);
+                }
+            }
+        });
+
+        marioDown = new Timer(5, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(MarioX >BrickX && MarioX+50<BrickX+50){
+                    MarioY--;
+                    if(MarioY==300){
+                        jlabBigM.setLocation(MarioX,MarioY);
+                        marioDown.stop();
+                    }
                 }
             }
         });
@@ -208,11 +230,16 @@ public class test extends JFrame {
             guguRun.stop();
         }
     }
-    private void stopbrick(){
-
+    private void brickEdge(){
+        if((MarioX >= BrickX && MarioX-5 <= BrickX+50)||(MarioX+50 >= BrickX+5 && MarioX+50 <= BrickX+50)){
+            marioFoot = 250;
+            mariojump = 150;
+        }else{
+            MarioY = 300;
+            marioFoot = 300;
+            mariojump = 150;
+            marioDown.start();
+        }
     }
 }
-
-
-
 
