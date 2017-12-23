@@ -235,7 +235,7 @@ public class test extends JFrame {
             marioFoot = 250;
             mariojump = 150;
         }else{
-            MarioY = 300;
+
             marioFoot = 300;
             mariojump = 150;
             marioDown.start();

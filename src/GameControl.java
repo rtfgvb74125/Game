@@ -5,9 +5,8 @@ import java.awt.event.*;
 public class GameControl extends JFrame {
     private int ScreenW = Toolkit.getDefaultToolkit().getScreenSize().width;
     private int ScreenH = Toolkit.getDefaultToolkit().getScreenSize().height;
-    private int frmW = 1000, frmH = 1000, MarioX = 500, MarioY = 820,GuguX = 950,GuguY = 820,BrickX = 600,BrickY = 820;
+    private int frmW = 1000, frmH = 1000, MarioX = 500, MarioY = 820,GuguX = 950,GuguY = 820,BrickX = 600,BrickY = 825;
     private int c = 0, t =0;
-    private int marioFoot = 820, mariojump = 720;
     private Timer marioUP;
     private Timer guguRun;
     private Timer gameTime;
@@ -79,7 +78,6 @@ public class GameControl extends JFrame {
         jtxTime.setEnabled(true);
         jtxTime.setFont(new Font(null,Font.BOLD,20));
 //        jpnSouth.add(jbStart);
-        jtxTime.setFont(new Font(null,Font.BOLD,20));
         jpnSouth.add(jlCount);
         jpnSouth.add(jtxCount);
         jpnSouth.add(jlTime);
@@ -99,7 +97,6 @@ public class GameControl extends JFrame {
                     case KeyEvent.VK_RIGHT:
                         if(MarioX < 950){
                             MarioX += 10;
-                            brickEdge();
                             if (cImage) {
                                 jlabMario.setIcon(mariomini);
                                 jlabMario.setLocation(MarioX, MarioY);
@@ -118,7 +115,6 @@ public class GameControl extends JFrame {
                     case KeyEvent.VK_LEFT:
                         if(MarioX > 0){
                             MarioX -= 10;
-                            brickEdge();
                             if (cImage) {
                                 jlabMario.setIcon(mariominileft);
                                 jlabMario.setLocation(MarioX, MarioY);
@@ -140,7 +136,7 @@ public class GameControl extends JFrame {
                         jlabMario.setIcon(marioup);
                         jlabBigM.setIcon(bigup);
                         gugubig();
-                        brickEdge();
+
                 }
             }
 
@@ -155,9 +151,9 @@ public class GameControl extends JFrame {
         marioUP = new Timer(5, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (MarioY > mariojump && cheak) {
+                if (MarioY > 696 && cheak) {
                     MarioY--;
-                    if (MarioY == mariojump) {
+                    if (MarioY == 696) {
                         cheak = false;
                     }
                     jlabMario.setLocation(MarioX, MarioY);
@@ -214,16 +210,7 @@ public class GameControl extends JFrame {
             guguRun.stop();
         }
     }
-    private void brickEdge(){
-        if((MarioX >= BrickX && MarioX-5 <= BrickX+50)||(MarioX+50 >= BrickX+5 && MarioX+50 <= BrickX+50)){
-            marioFoot = 770;
-            mariojump = 620;
-        }else{
-            MarioY = 820;
-            marioFoot = 820;
-            mariojump = 720;
-          //  marioDown.start();
-        }
+
     }
 }
 
