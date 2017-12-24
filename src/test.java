@@ -40,6 +40,7 @@ public class test extends JFrame {
     private boolean cheak = true;
     private boolean cheak2 = false;
     private boolean cImage = true;
+    private boolean cbrick = false;
 
     public test() {
         init();
@@ -97,11 +98,9 @@ public class test extends JFrame {
             public void keyPressed(KeyEvent e) {
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_RIGHT:
-                        if(MarioX < 950){
+                        if(MarioX < 950 ||MarioX<=BrickX-50){
                             MarioX += 10;
-                            brickEdge();
-                            System.out.println(123);
-                            marioDown.start();
+
                             if (cImage) {
                                 jlabMario.setIcon(mariomini);
                                 jlabMario.setLocation(MarioX, MarioY);
@@ -113,15 +112,17 @@ public class test extends JFrame {
                                 jlabBigM.setIcon(bigup);
                             }
                             gugubig();
+                            brickEdge();
                             jlabBigM.setLocation(jlabMario.getX(),jlabMario.getY()-25);
                         }
+
+
                         System.out.println(jlabMario.getX()+"\t"+(jlabMario.getY()-25));
                         break;
                     case KeyEvent.VK_LEFT:
-                        if(MarioX > 0){
+                        if(MarioX > 0 || MarioX>=BrickX+50){
                             MarioX -= 10;
-                            brickEdge();
-                            marioDown.start();
+
                             if (cImage) {
                                 jlabMario.setIcon(mariominileft);
                                 jlabMario.setLocation(MarioX, MarioY);
@@ -133,6 +134,7 @@ public class test extends JFrame {
                                 jlabBigM.setIcon(bigupleft);
                             }
                             gugubig();
+                            brickEdge();
                             jlabBigM.setLocation(jlabMario.getX(),jlabMario.getY()-25);
                         }
                         System.out.println(jlabMario.getX()+"\t"+(jlabMario.getY()-25));
@@ -143,7 +145,7 @@ public class test extends JFrame {
                         jlabMario.setIcon(marioup);
                         jlabBigM.setIcon(bigup);
                         gugubig();
-                        brickEdge();
+
                 }
             }
 
@@ -158,6 +160,7 @@ public class test extends JFrame {
         marioUP = new Timer(5, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 if (MarioY > mariojump && cheak) {
                     MarioY--;
                     if (MarioY == mariojump) {
@@ -181,18 +184,7 @@ public class test extends JFrame {
             }
         });
 
-        marioDown = new Timer(5, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(MarioX >BrickX && MarioX+50<BrickX+50){
-                    MarioY--;
-                    if(MarioY==300){
-                        jlabBigM.setLocation(MarioX,MarioY);
-                        marioDown.stop();
-                    }
-                }
-            }
-        });
+
 
         guguRun = new Timer(3, new ActionListener() {
             @Override
@@ -203,6 +195,7 @@ public class test extends JFrame {
                 System.out.println(GuguX);
 //                guguRun.stop();
             }
+
         });
 
         gameTime = new Timer(1000, new ActionListener() {
@@ -213,11 +206,6 @@ public class test extends JFrame {
             }
         });
 
-//        for(int i = 0;i<20;i++){
-//            jlabrick[i] = new JLabel();
-//            jlabrick[i].setIcon(brick);
-//            jpGround.add(jlabground[i]);
-//        }
     }
     private void gugubig(){
         if((MarioX>=GuguX && MarioX<=GuguX+50) && (MarioY<=GuguY && MarioY>=GuguY-50)){
@@ -230,16 +218,29 @@ public class test extends JFrame {
             guguRun.stop();
         }
     }
-    private void brickEdge(){
-        if((MarioX >= BrickX && MarioX-5 <= BrickX+50)||(MarioX+50 >= BrickX+5 && MarioX+50 <= BrickX+50)){
+    private void brickEdge() {
+        System.out.println("GO");
+        if (((MarioX >= BrickX && MarioX - 5 <= BrickX + 50) || (MarioX + 50 >= BrickX + 5 && MarioX + 50 <= BrickX + 50))&& (MarioY==BrickY-75)) {
+            System.out.println("UP");
             marioFoot = 250;
             mariojump = 150;
-        }else{
 
+            cbrick = true;
+
+        } else if (MarioX >= BrickX + 50 || MarioX <= BrickX) {
+//            marioDown.start();
+            System.out.println("Down");
+            if (cbrick == true) {
+                MarioY = 300;
+            }
+            cbrick = false;
             marioFoot = 300;
-            mariojump = 150;
-            marioDown.start();
+            mariojump = 200;
+
         }
     }
-}
+    }
+
+
+
 
