@@ -155,6 +155,7 @@ public class GameControl extends JFrame {
                         jlabBigM.setIcon(bigup);
                         gugubig();
                         brick();
+                        break;
 
                 }
             }
