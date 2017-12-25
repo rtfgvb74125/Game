@@ -11,9 +11,9 @@ public class LoginGame extends JFrame{
     private int frmW = 600,frmH = 500,MarioX = 300,MarioY = 380;
     private JButton jbtnStart = new JButton("START");
     private Container cp;
-    private ImageIcon MarioR = new ImageIcon("Image/mini.png");
-    private ImageIcon MarioL = new ImageIcon("Image/minileft.png");
-    private ImageIcon Brick = new ImageIcon("Image/brick.png");
+    private ImageIcon MarioR = new ImageIcon("Image/1.png");
+    private ImageIcon MarioL = new ImageIcon("Image/2.png");
+    private ImageIcon Brick = new ImageIcon("Image/9.png");
     private JLabel jlabground = new JLabel();
     private JLabel Mario = new JLabel(MarioR);
     private JLabel Title1 = new JLabel("SUPER");

@@ -12,16 +12,16 @@ public class test extends JFrame {
     private Timer guguRun;
     private Timer gameTime;
     private Timer marioDown;
-    private ImageIcon mariomini = new ImageIcon("Image/mini.png");
-    private ImageIcon mariominileft = new ImageIcon("Image/minileft.png");
-    private ImageIcon mario = new ImageIcon("Image/m.png");
-    private ImageIcon marioleft = new ImageIcon("Image/mleft.png");
-    private ImageIcon marioup = new ImageIcon("Image/mup.png");
-    private ImageIcon marioupleft = new ImageIcon("Image/mupleft.png");
-    private ImageIcon bigup = new ImageIcon("Image/bigup.png");
-    private ImageIcon bigupleft = new ImageIcon("Image/bigupleft.png");
-    private ImageIcon gugu = new ImageIcon("Image/mario_gugu.png");
-    private ImageIcon brick = new ImageIcon("Image/brick.png");
+    private ImageIcon mariomini = new ImageIcon("Image/1.png");
+    private ImageIcon mariominileft = new ImageIcon("Image/2.png");
+    private ImageIcon mario = new ImageIcon("Image/5.png");
+    private ImageIcon marioleft = new ImageIcon("Image/6.png");
+    private ImageIcon marioup = new ImageIcon("Image/3.png");
+    private ImageIcon marioupleft = new ImageIcon("Image/4.png");
+    private ImageIcon bigup = new ImageIcon("Image/7.png");
+    private ImageIcon bigupleft = new ImageIcon("Image/8.png");
+    private ImageIcon gugu = new ImageIcon("Image/10.png");
+    private ImageIcon brick = new ImageIcon("Image/9.png");
     private JLabel jlabMario = new JLabel(mariomini);
     private JLabel jlabBigM = new JLabel(marioleft);
     private JLabel jlabGugu = new JLabel(gugu);
@@ -220,7 +220,7 @@ public class test extends JFrame {
     }
     private void brickEdge() {
         System.out.println("GO");
-        if (((MarioX >= BrickX && MarioX - 5 <= BrickX + 50) || (MarioX + 50 >= BrickX + 5 && MarioX + 50 <= BrickX + 50))&& (MarioY==BrickY-75)) {
+        if (((MarioX >= BrickX && MarioX - 5 <= BrickX + 50) || (MarioX + 50 >= BrickX + 5 && MarioX + 50 <= BrickX + 50))) {
             System.out.println("UP");
             marioFoot = 250;
             mariojump = 150;
