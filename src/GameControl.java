@@ -7,7 +7,7 @@ public class GameControl extends JFrame {
     private int ScreenH = Toolkit.getDefaultToolkit().getScreenSize().height;
     private int frmW = 1000, frmH = 1000, MarioX = 500, MarioY = 820, GuguX = 950, GuguY = 820, BrickX = 600, BrickY = 825, Brick2X = 700, Brick2Y = 775,Brick3X = 800,Brick3Y=725;
     private int c = 0, t = 0;
-    private int mariojump = 720, marioFoot = 820;
+    private int mariojump = 695, marioFoot = 820;
     private Timer marioUP;
     private Timer guguRun;
     private Timer gameTime;
@@ -126,8 +126,8 @@ public class GameControl extends JFrame {
 
 //                            brick3();
                             jlabBigM.setLocation(jlabMario.getX(), jlabMario.getY() - 25);
-
                     }
+
                         System.out.println(jlabMario.getX() + "\t" + (jlabMario.getY() - 25));
                         flag = false;
                         flag2 = false;
@@ -162,7 +162,9 @@ public class GameControl extends JFrame {
                         break;
                     case KeyEvent.VK_UP:
                         if(((MarioX >= BrickX && MarioX - 5 <= BrickX + 50) || (MarioX + 50 >= BrickX + 5 && MarioX + 50 <= BrickX + 50))){
-                            flag = true;
+                            if(BrickY-75==MarioY) {
+                                flag = true;
+                            }
                         }else if(((MarioX >= Brick2X && MarioX - 5 <= Brick2X + 50) || (MarioX + 50 >= Brick2X + 5 && MarioX + 50 <= Brick2X + 50))){
                             flag2 =true;
                         }else if (((MarioX >= Brick3X && MarioX - 5 <= Brick3X + 50) || (MarioX + 50 >= Brick3X + 5 && MarioX + 50 <= Brick3X + 50))){
@@ -264,14 +266,14 @@ public class GameControl extends JFrame {
     public void brick() {
         if (flag) {
             System.out.println("B1");
-            if ((((MarioX >= BrickX && MarioX - 5 <= BrickX + 50) || (MarioX + 50 >= BrickX + 5 && MarioX+50 <= BrickX + 50)) )) {
+            if (((MarioX >= BrickX && MarioX - 5 <= BrickX + 50) || (MarioX + 50 >= BrickX + 5 && MarioX+50 <= BrickX + 50))) {
                     System.out.println("UPB1");
-                    mariojump = 670;
+                    mariojump = 645;
                     marioFoot = 770;
             } else {
                 System.out.println("dowmB1");
                 marioFoot = 820;
-                mariojump = 720;
+                mariojump = 695;
             }
         }
     }
@@ -280,22 +282,22 @@ public class GameControl extends JFrame {
         if (flag2) {
             System.out.println("B2");
             if (((MarioX >= Brick2X && MarioX - 5 <= Brick2X + 50) || (MarioX + 50 >= Brick2X + 5 && MarioX+50  <= Brick2X + 50))) {
-                mariojump = 620;
+                mariojump = 595;
                 marioFoot = 720;
             } else {
                 marioFoot = 820;
-                mariojump = 720;
+                mariojump = 695;
             }
         }
     }
     public void brick3() {
         if (flag3) {
             if (((MarioX >= Brick3X && MarioX - 5 <= Brick3X + 50) || (MarioX + 50 >= Brick3X + 5 && MarioX +50<= Brick3X + 50))) {
-                mariojump = 570;
+                mariojump = 545;
                 marioFoot = 670;
             } else {
                 marioFoot = 820;
-                mariojump = 720;
+                mariojump = 695;
             }
         }
     }
