@@ -5,7 +5,7 @@ import java.awt.event.*;
 public class GameControl extends JFrame {
     private int ScreenW = Toolkit.getDefaultToolkit().getScreenSize().width;
     private int ScreenH = Toolkit.getDefaultToolkit().getScreenSize().height;
-    private int frmW = 1000, frmH = 1000, MarioX = 500, MarioY = 820, GuguX = 950, GuguY = 820, BrickX = 600, BrickY = 825, Brick2X = 650, Brick2Y = 775,Brick3X = 750,Brick3Y=725;
+    private int frmW = 1000, frmH = 1000, MarioX = 500, MarioY = 820, GuguX = 950, GuguY = 820, BrickX = 600, BrickY = 825, Brick2X = 700, Brick2Y = 775,Brick3X = 800,Brick3Y=725;
     private int c = 0, t = 0;
     private int mariojump = 720, marioFoot = 820;
     private Timer marioUP;
@@ -42,6 +42,9 @@ public class GameControl extends JFrame {
     private Container cp;
     private boolean cheak = true;
     private boolean cImage = true;
+    private boolean flag = true;
+    private boolean flag2 = true;
+    private boolean flag3 = true;
 
     public GameControl() {
         init();
@@ -106,6 +109,7 @@ public class GameControl extends JFrame {
                     case KeyEvent.VK_RIGHT:
 
                         if (MarioX < 950) {
+
                             MarioX += 5;
                             if (cImage) {
                                 jlabMario.setIcon(mariomini);
@@ -119,16 +123,20 @@ public class GameControl extends JFrame {
                             }
 
                             gugubig();
-                            brick();
-                            brick2();
+
 //                            brick3();
                             jlabBigM.setLocation(jlabMario.getX(), jlabMario.getY() - 25);
-                        }
+
+                    }
                         System.out.println(jlabMario.getX() + "\t" + (jlabMario.getY() - 25));
+                        flag = false;
+                        flag2 = false;
+                        flag3 = false;
                         break;
                     case KeyEvent.VK_LEFT:
 
                         if (MarioX > 0) {
+
                             MarioX -= 5;
                             if (cImage) {
                                 jlabMario.setIcon(mariominileft);
@@ -141,21 +149,40 @@ public class GameControl extends JFrame {
                                 jlabBigM.setIcon(bigupleft);
                             }
                             gugubig();
-                            brick();
-                            brick2();
-//                            brick3();
+
+//                          brick3();
                             jlabBigM.setLocation(jlabMario.getX(), jlabMario.getY() - 25);
-                        }
+
+                    }
                         System.out.println(jlabMario.getX() + "\t" + (jlabMario.getY() - 25));
+
+                        flag = false;
+                        flag2 = false;
+                        flag3 = false;
                         break;
                     case KeyEvent.VK_UP:
-                        cImage = false;
-                        marioUP.start();
-                        jlabMario.setIcon(marioup);
-                        jlabBigM.setIcon(bigup);
-                        gugubig();
-                        brick();
-                        break;
+                        if(((MarioX >= BrickX && MarioX - 5 <= BrickX + 50) || (MarioX + 50 >= BrickX + 5 && MarioX + 50 <= BrickX + 50))){
+                            flag = true;
+                        }else if(((MarioX >= Brick2X && MarioX - 5 <= Brick2X + 50) || (MarioX + 50 >= Brick2X + 5 && MarioX + 50 <= Brick2X + 50))){
+                            flag2 =true;
+                        }else if (((MarioX >= Brick3X && MarioX - 5 <= Brick3X + 50) || (MarioX + 50 >= Brick3X + 5 && MarioX + 50 <= Brick3X + 50))){
+                           flag3 = true;
+                        }else{
+                            flag = true;
+                            flag2 = true;
+                            flag3 = true;
+                        }
+                            cImage = false;
+                            marioUP.start();
+                            jlabMario.setIcon(marioup);
+                            jlabBigM.setIcon(bigup);
+                            gugubig();
+                            brick();
+                            brick2();
+                            brick3();
+                            break;
+
+
 
                 }
             }
@@ -221,46 +248,57 @@ public class GameControl extends JFrame {
     }
 
     public void gugubig() {
-        if ((MarioX >= GuguX && MarioX <= GuguX + 50) && (MarioY <= GuguY && MarioY >= GuguY - 50)) {
-            jlabBigM.setBounds(GuguX, GuguY - 25, 50, 75);
-            jlabBigM.setVisible(true);
+
+            if ((MarioX >= GuguX && MarioX <= GuguX + 50) && (MarioY <= GuguY && MarioY >= GuguY - 50)) {
+                jlabBigM.setBounds(GuguX, GuguY - 25, 50, 75);
+                jlabBigM.setVisible(true);
 //            this.add(jlabBigM);
-            System.out.println(jlabMario.getX() + "\t" + (jlabMario.getY() - 25));
-            jlabMario.setVisible(false);
-            jlabGugu.setVisible(false);
-            guguRun.stop();
+                System.out.println(jlabMario.getX() + "\t" + (jlabMario.getY() - 25));
+                jlabMario.setVisible(false);
+                jlabGugu.setVisible(false);
+                guguRun.stop();
+
         }
     }
 
     public void brick() {
-        if (((MarioX >= BrickX && MarioX - 5 <= BrickX + 50) || (MarioX + 50 >= BrickX + 5 && MarioX + 50 <= BrickX + 50))) {
-            mariojump = 670;
-            marioFoot = 770;
-
-        } else {
-            marioFoot = 820;
-            mariojump = 720;
-        }
-    }
-
-    public void brick2() {
-        if (((MarioX >= Brick2X && MarioX - 5 <= Brick2X + 50) || (MarioX + 50 >= Brick2X + 5 && MarioX + 50 <= Brick2X + 50))) {
-            mariojump = 620;
-            marioFoot = 720;
-        } else {
+        if (flag) {
+            System.out.println("B1");
+            if ((((MarioX >= BrickX && MarioX - 5 <= BrickX + 50) || (MarioX + 50 >= BrickX + 5 && MarioX+50 <= BrickX + 50)) )) {
+                    System.out.println("UPB1");
+                    mariojump = 670;
+                    marioFoot = 770;
+            } else {
+                System.out.println("dowmB1");
                 marioFoot = 820;
                 mariojump = 720;
             }
         }
-//    public void brick3() {
-//        if (((MarioX >= Brick3X && MarioX - 5 <= Brick3X + 50) || (MarioX + 50 >= Brick3X + 5 && MarioX + 50 <= Brick3X + 50))) {
-//            mariojump = 570;
-//            marioFoot = 670;
-//        } else {
-//            marioFoot = 820;
-//            mariojump = 720;
-//        }
-//    }
+    }
+    public void brick2() {
+
+        if (flag2) {
+            System.out.println("B2");
+            if (((MarioX >= Brick2X && MarioX - 5 <= Brick2X + 50) || (MarioX + 50 >= Brick2X + 5 && MarioX+50  <= Brick2X + 50))) {
+                mariojump = 620;
+                marioFoot = 720;
+            } else {
+                marioFoot = 820;
+                mariojump = 720;
+            }
+        }
+    }
+    public void brick3() {
+        if (flag3) {
+            if (((MarioX >= Brick3X && MarioX - 5 <= Brick3X + 50) || (MarioX + 50 >= Brick3X + 5 && MarioX +50<= Brick3X + 50))) {
+                mariojump = 570;
+                marioFoot = 670;
+            } else {
+                marioFoot = 820;
+                mariojump = 720;
+            }
+        }
+    }
     }
 
 
